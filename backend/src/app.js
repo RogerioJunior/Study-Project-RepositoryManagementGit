@@ -1,7 +1,28 @@
-import express from "express";
+import express, { Router } from "express";
 import cors from "cors";
 
 class App {
+
+    constructor() {
+        this.server = express();
+        this.middlewares();
+        this.routes();
+    }
+
+    middlewares() {
+        this.server.use(express.json());
+        this.server.use(cors());
+    }
+
+    routes() {
+        const routes = new Router();
+
+        routes.get('/hello', (req, res) => {
+            res.json({ hello: 'wordl' });
+        });
+
+        this.server.use(routes);
+    }
 
 }
 
