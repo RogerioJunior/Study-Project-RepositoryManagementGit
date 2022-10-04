@@ -5,7 +5,6 @@ import { createPasswordHash } from "../services/auth";
 class UsersController {
   async index(req, res) {
     try {
-      console.log("passou aqui");
       const users = await User.find();
       return res.json(users);
     } catch (err) {
