@@ -1,12 +1,21 @@
 import { Router } from "express";
+import auth from "./middlewares/auth";
 import HelloController from "./controllers/HelloController";
 import UsersController from "./controllers/UsersController";
 import RepositoriesController from "./controllers/RepositoriesController";
 
 const routes = new Router();
 
+// public controllers
 routes.get('/hello', HelloController.index);
 
+
+routes.use(auth);
+
+// --- protect routes ( middlewares )
+
+
+// private controllers
 
 //RESTFull
 routes.get('/users', UsersController.index);
