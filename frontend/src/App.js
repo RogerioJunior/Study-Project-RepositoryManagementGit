@@ -1,11 +1,9 @@
-import './App.css';
 
-import LoginPage from './pages/LoginPage';
-import MainPage from './pages/MainPage';
+import AppRoutes from './AppRoutes';
 
 function App() {
   return (
-    <h1>App</h1>
+    <AppRoutes />
   );
 }
 
