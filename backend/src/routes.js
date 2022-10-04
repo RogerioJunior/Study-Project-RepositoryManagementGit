@@ -1,14 +1,13 @@
 import { Router } from "express";
 import auth from "./middlewares/auth";
-import HelloController from "./controllers/HelloController";
+import SessionsController from "./controllers/SessionsController";
 import UsersController from "./controllers/UsersController";
 import RepositoriesController from "./controllers/RepositoriesController";
 
 const routes = new Router();
 
 // public controllers
-routes.get('/hello', HelloController.index);
-
+routes.post('/sessions', SessionsController.create);
 
 routes.use(auth);
 
