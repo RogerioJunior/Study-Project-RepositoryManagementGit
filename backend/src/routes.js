@@ -9,7 +9,7 @@ const routes = new Router();
 // public controllers
 routes.post('/sessions', SessionsController.create);
 
-routes.use(auth);
+//routes.use(auth);
 
 // --- protect routes ( middlewares )
 
@@ -25,6 +25,6 @@ routes.delete('/users/:id', UsersController.destroy);
 
 routes.get('/users/:user_id/repositories', RepositoriesController.index);
 routes.post('/users/:user_id/repositories', RepositoriesController.create);
-routes.delete('/users/:user_id/repositories', RepositoriesController.destroy);
+routes.delete('/users/:user_id/repositories/:id', RepositoriesController.destroy);
 
 export default routes;
