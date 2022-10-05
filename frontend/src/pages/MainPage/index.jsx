@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Nav from "./Nav";
 import Search from "./Search";
 import Repositories from "./Repositories";
-import { getRepositories } from "../../services/api";
+import { getRepositories, createRepository } from "../../services/api";
 
 import "./styles.css";
 
@@ -12,6 +12,8 @@ const MainPage = () => {
   const [repositories, setRepositories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingError, setLoadingError] = useState(false);
+
+  const userId = "633c423ab3ea13bd2cc19cdd";
 
   const loadData = async (query = "") => {
     try {
@@ -42,8 +44,15 @@ const MainPage = () => {
     console.log("delete repo", repository);
   };
 
-  const handleNewRepo = (url) => {
+  const handleNewRepo = async (url) => {
     console.log("new repo", url);
+    try {
+      await createRepository(userId, url);
+      await loadData();
+    } catch (err) {
+      console.error(err);
+      setLoadingError(true);
+    }
   };
 
   if (loadingError) {
