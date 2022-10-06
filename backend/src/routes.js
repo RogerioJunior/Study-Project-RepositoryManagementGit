@@ -9,7 +9,7 @@ const routes = new Router();
 // public controllers
 routes.post('/sessions', SessionsController.create);
 
-//routes.use(auth);
+routes.use(auth);
 
 // --- protect routes ( middlewares )
 

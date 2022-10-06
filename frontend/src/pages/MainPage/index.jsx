@@ -6,12 +6,16 @@ import { AuthContext } from "../../contexts/auth";
 import Nav from "./Nav";
 import Search from "./Search";
 import Repositories from "./Repositories";
-import { getRepositories, createRepository, destroyRepository } from "../../services/api";
+import {
+  getRepositories,
+  createRepository,
+  destroyRepository,
+} from "../../services/api";
 
 import "./styles.css";
 
 const MainPage = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const [repositories, setRepositories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingError, setLoadingError] = useState(false);
@@ -34,6 +38,7 @@ const MainPage = () => {
 
   const handleLogout = () => {
     console.log("logout");
+    logout();
   };
 
   const handleSearch = (query) => {
@@ -71,9 +76,7 @@ const MainPage = () => {
   }
 
   if (loading) {
-    return (
-    <div className="loading">Carregando...</div>
-    );
+    return <div className="loading">Carregando...</div>;
   }
 
   return (
