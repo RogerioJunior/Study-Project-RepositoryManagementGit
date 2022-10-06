@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+
+import { AuthContext } from "../../contexts/auth";
 
 import Nav from "./Nav";
 import Search from "./Search";
 import Repositories from "./Repositories";
-import { getRepositories, createRepository } from "../../services/api";
+import { getRepositories, createRepository, destroyRepository } from "../../services/api";
 
 import "./styles.css";
 
 const MainPage = () => {
+  const { user } = useContext(AuthContext);
   const [repositories, setRepositories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingError, setLoadingError] = useState(false);
 
-  const userId = "633c423ab3ea13bd2cc19cdd";
-
   const loadData = async (query = "") => {
     try {
       setLoading(true);
-      const response = await getRepositories("633c423ab3ea13bd2cc19cdd");
-      console.log(response.data);
+      const response = await getRepositories(user?.id, query);
       setRepositories(response.data);
       setLoading(false);
     } catch (err) {
@@ -37,17 +37,23 @@ const MainPage = () => {
   };
 
   const handleSearch = (query) => {
-    console.log("query", query);
+    loadData(query);
   };
 
-  const handleDeleteRepo = (repository) => {
+  const handleDeleteRepo = async (repository) => {
     console.log("delete repo", repository);
+    try {
+      await destroyRepository(user?.id, repository._id);
+      await loadData();
+    } catch (err) {
+      setLoadingError(true);
+    }
   };
 
   const handleNewRepo = async (url) => {
     console.log("new repo", url);
     try {
-      await createRepository(userId, url);
+      await createRepository(user?.id, url);
       await loadData();
     } catch (err) {
       console.error(err);
